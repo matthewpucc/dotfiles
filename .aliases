@@ -65,4 +65,4 @@ done
 alias zcat="gunzip -c"
 
 # http server
-alias="python -m SimpleHTTPServer 8000"
+alias webserve="python -m SimpleHTTPServer 8000"

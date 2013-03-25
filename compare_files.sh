@@ -1,18 +1,18 @@
 #!/bin/bash
 
-[ "`md5sum .aliases`" = "`md5sum ~/.aliases`" ] && echo ".aliases is good" || echo ".aliases is mismatched"
-[ "`md5sum .bash_profile`" = "`md5sum ~/.bash_profile`" ] && echo ".bash_profile is good" || echo ".bash_profile is mismatched"
-[ "`md5sum .bash_prompt`" = "`md5sum ~/.bash_prompt`" ] && echo ".bash_prompt is good" || echo ".bash_prompt is mismatched"
-[ "`md5sum .bashrc`" = "`md5sum ~/.bashrc`" ] && echo ".bashrc is good" || echo ".bashrc is mismatched"
-[ "`md5sum .brew`" = "`md5sum ~/.brew`" ] && echo ".brew is good" || echo ".brew is mismatched"
-[ "`md5sum .exports`" = "`md5sum ~/.exports`" ] && echo ".exports is good" || echo ".exports is mismatched"
-[ "`md5sum .functions`" = "`md5sum ~/.functions`" ] && echo ".functions is good" || echo ".functions is mismatched"
-[ "`md5sum .gitattributes`" = "`md5sum ~/.gitattributes`" ] && echo ".gitattributes is good" || echo ".gitattributes is mismatched"
-[ "`md5sum .gitconfig`" = "`md5sum ~/.gitconfig`" ] && echo ".gitconfig is good" || echo ".gitconfig is mismatched"
-[ "`md5sum .gitignore`" = "`md5sum ~/.gitignore`" ] && echo ".gitignore is good" || echo ".gitignore is mismatched"
-[ "`md5sum .gvimrc`" = "`md5sum ~/.gvimrc`" ] && echo ".gvimrc is good" || echo ".gvimrc is mismatched"
-[ "`md5sum .inputrc`" = "`md5sum ~/.inputrc`" ] && echo ".inputrc is good" || echo ".inputrc is mismatched"
-[ "`md5sum .osx`" = "`md5sum ~/.osx`" ] && echo ".osx is good" || echo ".osx is mismatched"
-[ "`md5sum .screenrc`" = "`md5sum ~/.screenrc`" ] && echo ".screenrc is good" || echo ".screenrc is mismatched"
-[ "`md5sum .vimrc`" = "`md5sum ~/.vimrc`" ] && echo ".vimrc is good" || echo ".vimrc is mismatched"
-[ "`md5sum .wgetrc`" = "`md5sum ~/.wgetrc`" ] && echo ".wgetr is good" || echo ".wgetr is mismatched"
+mismatched() {
+  WHAT=$1
+  echo "$WHAT is mismatched"
+  if [[ -f ~/$WHAT && -f ./$WHAT ]]; then
+    diff $WHAT ~/$WHAT
+  else
+    [ -f "~/$WHAT" ] && echo "~/$WHAT is missing"
+    [ -f "$WHAT" ] && echo "$WHAT is missing"
+  fi
+  echo
+}
+
+for FILE in .aliases .bash_profile .bash_prompt .bashrc .brew .exports .functions .gitattributes .gitconfig .gitignore .gvimrc .inputrc .linux .osx .osx_specific .screenrc .vimrc .wgetrc
+do
+  [ "`md5sum $FILE | awk '{print $1}'`" = "`md5sum ~/$FILE | awk '{print $1}'`" ] && echo "$FILE is good" || mismatched "$FILE"
+done
