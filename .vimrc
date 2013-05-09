@@ -57,6 +57,8 @@ set showmode
 set title
 " Show the (partial) command as it’s being typed
 set showcmd
+" set colorscheme
+colorscheme molokai
 " Use relative line numbers
 if exists("&relativenumber")
 	set relativenumber
