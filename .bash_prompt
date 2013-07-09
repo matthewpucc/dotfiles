@@ -36,7 +36,7 @@ else
 fi
 
 function parse_git_dirty() {
-  [[ $(git status 2> /dev/null | tail -n1) != "nothing to commit (working directory clean)" ]] && echo "*"
+  [[ $(git status 2> /dev/null | tail -n1 | cut -c 1-17) != "nothing to commit" ]] && echo "*"
 }
 
 function parse_git_branch() {
@@ -47,4 +47,10 @@ function parse_svn() {
   svn info 2> /dev/null | grep '^URL:' | sed -ne 's/^URL: http:\/\/svnhost\/svn\///p'
 }
 
-PS1="\[${BOLD}${MAGENTA}\]\u \[$WHITE\]at \[$ORANGE\]\h \[$WHITE\]in \[$GREEN\]\w\[$WHITE\]\$([[ -n \$(git branch 2> /dev/null) ]] && echo \" on \")\[$PURPLE\]\$(parse_git_branch)\[$WHITE\]\$([[ -n \$(svn info 2> /dev/null) ]] && echo \" on \")\[$PURPLE\]\$(parse_svn)\[$WHITE\]\n\$ \[$RESET\]"
+function parse_git_origin() {
+  [[ $(git status 2> /dev/null | grep 'branch is ahead of') ]] && echo "+"
+}
+
+export OS=`uname -s`
+
+PS1="\[${BOLD}${MAGENTA}\]\u \[$WHITE\]at \[$ORANGE\]\h ($OS) \[$WHITE\]in \[$GREEN\]\w\[$WHITE\]\$([[ -n \$(git branch 2> /dev/null) ]] && echo \" on \")\[$PURPLE\]\$(parse_git_branch)\$(parse_git_origin)\[$WHITE\]\$([[ -n \$(svn info 2> /dev/null) ]] && echo \" on \")\[$PURPLE\]\$(parse_svn)\[$WHITE\]\n\$ \[$RESET\]"
