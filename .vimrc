@@ -96,3 +96,6 @@ function! NumberToggle()
 endfunc
 
 nnoremap <C-n> :call NumberToggle()<cr>
+
+" Make writing commit messages easier
+autocmd Filetype gitcommit setlocal spell textwidth=72
