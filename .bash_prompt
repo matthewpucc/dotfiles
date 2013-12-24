@@ -36,19 +36,27 @@ else
 fi
 
 function parse_git_dirty() {
-  [[ $(git status 2> /dev/null | tail -n1 | cut -c 1-17) != "nothing to commit" ]] && echo "*"
+  if [[ -n `which git` ]]; then
+    [[ $(git status 2> /dev/null | tail -n1 | cut -c 1-17) != "nothing to commit" ]] && echo "*"
+  fi
 }
 
 function parse_git_branch() {
-  git branch --no-color 2> /dev/null | sed -e '/^[^*]/d' -e "s/* \(.*\)/\1$(parse_git_dirty)/"
+  if [[ -n `which git` ]]; then 
+    git branch --no-color 2> /dev/null | sed -e '/^[^*]/d' -e "s/* \(.*\)/\1$(parse_git_dirty)/"
+  fi
 }
 
 function parse_svn() {
-  svn info 2> /dev/null | grep '^URL:' | sed -ne 's/^URL: http:\/\/svnhost\/svn\///p'
+  if [[ -n `which svn` ]]; then
+    svn info 2> /dev/null | grep '^URL:' | sed -ne 's/^URL: http:\/\/svnhost\/svn\///p'
+  fi
 }
 
 function parse_git_origin() {
-  [[ $(git status 2> /dev/null | grep 'branch is ahead of') ]] && echo "+"
+  if [[ -n `which git` ]]; then
+    [[ $(git status 2> /dev/null | grep 'branch is ahead of') ]] && echo "+"
+  fi
 }
 
 export OS=`uname -s`

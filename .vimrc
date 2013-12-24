@@ -31,7 +31,7 @@ set cursorline
 " Make tabs as wide as two spaces
 set tabstop=2
 " Show “invisible” characters
-" set lcs=tab:▸\ ,trail:·,eol:¬,nbsp:_
+" set lcs=tab:▸\ ,trail:·,nbsp:_
 " Make tabs spaces
 set expandtab
 set list
@@ -98,3 +98,6 @@ function! NumberToggle()
 endfunc
 
 nnoremap <C-n> :call NumberToggle()<cr>
+
+" Make writing commit messages easier
+autocmd Filetype gitcommit setlocal spell textwidth=72
