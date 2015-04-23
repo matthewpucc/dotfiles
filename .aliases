@@ -9,6 +9,7 @@ alias d="cd ~/Documents/Dropbox"
 alias src="cd ~/src"
 alias dsrc="cd ~/Dropbox/src"
 alias g="git"
+alias gc="git commit"
 alias gca="git commit -a"
 alias v="vim"
 
@@ -63,6 +64,8 @@ done
 
 # Zcat doesnt work like it should. FTFY
 alias zcat="gunzip -c"
+
+alias fuck='eval $(thefuck $(fc -ln -1))'
 
 # http server
 alias webserve="python -m SimpleHTTPServer 8000"
