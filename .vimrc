@@ -34,7 +34,7 @@ set tabstop=2
 " set lcs=tab:▸\ ,trail:·,nbsp:_
 " Make tabs spaces
 set expandtab
-set list
+set nolist
 " Highlight searches
 set hlsearch
 " Ignore case of searches
