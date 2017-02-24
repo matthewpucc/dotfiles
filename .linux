@@ -1,0 +1,1 @@
+alias cpuspeed="grep \"cpu MHz\" /proc/cpuinfo"

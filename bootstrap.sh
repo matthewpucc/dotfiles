@@ -1,9 +1,13 @@
 #!/bin/bash
 cd "$(dirname "$0")"
-git pull
+
 function doIt() {
-	rsync --exclude ".git/" --exclude ".DS_Store" --exclude ".gitignore" --exclude "bootstrap.sh" --exclude "README.md" -av . ~
+	if ! [[ "$OSTYPE" =~ ^darwin ]]; then
+		NO_OSX="--exclude '.osx*'"
+	fi
+	rsync --exclude ".git/" --exclude ".DS_Store" --exclude ".gitignore" --exclude "compare_files.sh" --exclude "bootstrap.sh" --exclude "README.md" $NO_OSX -av . ~
 }
+
 if [ "$1" == "--force" -o "$1" == "-f" ]; then
 	doIt
 else

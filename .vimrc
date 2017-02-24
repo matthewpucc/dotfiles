@@ -31,8 +31,10 @@ set cursorline
 " Make tabs as wide as two spaces
 set tabstop=2
 " Show “invisible” characters
-set lcs=tab:▸\ ,trail:·,eol:¬,nbsp:_
-set list
+" set lcs=tab:▸\ ,trail:·,nbsp:_
+" Make tabs spaces
+set expandtab
+set nolist
 " Highlight searches
 set hlsearch
 " Ignore case of searches
@@ -57,6 +59,8 @@ set showmode
 set title
 " Show the (partial) command as it’s being typed
 set showcmd
+" set colorscheme
+colorscheme molokai
 " Use relative line numbers
 if exists("&relativenumber")
 	set relativenumber
@@ -94,3 +98,6 @@ function! NumberToggle()
 endfunc
 
 nnoremap <C-n> :call NumberToggle()<cr>
+
+" Make writing commit messages easier
+autocmd Filetype gitcommit setlocal spell textwidth=72
